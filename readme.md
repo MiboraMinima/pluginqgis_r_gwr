@@ -1,17 +1,17 @@
-## **Plugin Qgis pour réaliser une analyse de GWR à l'aide du package GWmodel.**
+# **Plugin Qgis pour réaliser des statistiques spatiales (GWR, MGWR et LISA) à l'aide de R**
+
+## Données tests
 
 **Des données test sont dans le dossier "data_test"**
-  - Au format shape et geopackage
-  - Des polygones et des points.
 
-Pour installer plug-in télécharger dossier et décompresser dasn le dossier plugins de Qgis, (vous pouvez supprimer le dossier data_test), le chemin vers le dossier devrait ressembler sur windows à qqch comme ça : C:\Users\nomutilisateur\AppData\Roaming\QGIS\QGIS3\profiles\default\python\plugins
+1. Au format shape et geopackage
+2. Des polygones et des points.
 
-
-# Résumé du Plugin 
 
 ## Structure du Plugin
-Architecture générale
 
+
+```
 gwr_plugin/
 │
 ├── __init__.py                 # Point d'entrée du plugin
@@ -19,8 +19,9 @@ gwr_plugin/
 ├── gwr_analysis.py            # Module d'analyse GWR
 ├── mgwr_analysis.py           # Module d'analyse MGWR
 ├── lisa_analysis.py           # Module d'analyse LISA
-├── config.ini                 # Fichier de configuration (chemin R)
-└── metadata.txt               # Métadonnées du plugin (optionnel)
+├── config.ini                 # Fichier de configuration (crée lorsque le chemin R est spécifié suite à la première utilisation)
+└── metadata.txt               # Métadonnées du plugin
+```
 
 ## Objectif du plugin
 Réaliser une **Régression Géographiquement Pondérée (GWR)**, une **MGWR** ou une analyse de **LISA** directement depuis QGIS en utilisant R et les package `GWmodel` et `rgeoda`.
@@ -29,6 +30,8 @@ Réaliser une **Régression Géographiquement Pondérée (GWR)**, une **MGWR** o
 
 ## Le processus
 
+
+```
 ┌─────────────────────────────────────────────────────────────┐
 │  1. UTILISATEUR                                             │
 │     └─> Sélection du modèle (GWR/MGWR/LISA)                │
@@ -76,68 +79,76 @@ Réaliser une **Régression Géographiquement Pondérée (GWR)**, une **MGWR** o
 │     └─> Affichage du message de succès                     │
 │     └─> Affichage des résultats détaillés                  │
 └─────────────────────────────────────────────────────────────┘
+```
 
-## Installation
+### Prérequis
 
-Les Prérequis
+1. **QGIS** (version 3.x)
+2. **R** (version 4.0+)
+3. **Packages R requis :**
+   - Pour GWR/MGWR : `GWmodel`, `sp`, `sf`
+   - Pour LISA : `rgeoda`, `sf`
 
-QGIS (version 3.x)
-R (version 4.0+)
-Packages R requis :
+### Installation des packages R
 
-Pour GWR/MGWR : GWmodel, sp, sf
-Pour LISA : rgeoda, sf
-
-
-
-## Installation des packages R
-
-'''{r}
+```r
 # Dans R ou RStudio
 install.packages("GWmodel")
 install.packages("sp")
 install.packages("sf")
 install.packages("rgeoda")
-'''
+```
+
+### Installation du plugin
+
+1. Copiez le dossier du plugin dans le répertoire des plugins QGIS :
+   - Windows : `C:\Users\[utilisateur]\AppData\Roaming\QGIS\QGIS3\profiles\default\python\plugins\`
+   - Linux : `~/.local/share/QGIS/QGIS3/profiles/default/python/plugins/`
+   - Mac : `~/Library/Application Support/QGIS/QGIS3/profiles/default/python/plugins/`
+
+**ou**
+
+1bis. Ouvrir Qgis :
+      - Menu `Extensions` → `Installer depuis un ZIP`
+
+2. Redémarrez QGIS
+
+3. Activez le plugin :
+   - Menu `Extensions` → `Installer/Gérer les extensions`
+   - Recherchez "GWR Analysis R"
+   - Cochez la case pour l'activer
+
+4. Configurez le chemin R :
+   - Lancez le plugin
+   - Cliquez sur "Sélectionner Rscript.exe"
+   - Naviguez jusqu'à votre installation R (sur windows: `C:\Program Files\R\R-4.3.1\bin\Rscript.exe`)
 
 ## L'utilisation
 
 ### Workflow général
 
-Charger votre couche vectorielle dans QGIS
+1. **Charger votre couche vectorielle dans QGIS**
+   - Formats supportés : Shapefile, GeoPackage, etc.
+   - Doit contenir des attributs numériques
 
-Formats supportés : Shapefile, GeoPackage, etc.
-Doit contenir des attributs numériques
+2. **Lancer le plugin**
+   - Icône `Analyse GWR / MGWR / LISA` dans la barre d'outils
 
+3. **Choisir le type d'analyse**
+   - GWR
+   - MGWR
+   - LISA
 
-### Lancer le plugin
+4. **Configurer les paramètres**
+   - Sélectionner la couche
+   - Choisir les variables
+   - Ajuster les paramètres
 
-Menu Analyse Spatiale → Analyse GWR / MGWR / LISA
-Ou icône dans la barre d'outils
+5. **Lancer l'analyse**
+   - Cliquer sur "Lancer l'analyse"
+   - Patienter (peut prendre plusieurs minutes)
 
-
-### Choisir le type d'analyse
-
-GWR 
-MGWR
-LISA
-
-
-### Configurer les paramètres
-
-Sélectionner la couche
-Choisir les variables
-Ajuster les paramètres
-
-
-### Lancer l'analyse
-
-Cliquer sur "Lancer l'analyse"
-Patienter (peut prendre plusieurs minutes)
-
-
-### Consulter les résultats
-
-Une nouvelle couche est créée automatiquement
-Contient toutes les colonnes originales + les résultats
-La couche d'origine reste intacte
+6. **Consulter les résultats**
+   - Une nouvelle couche est créée automatiquement
+   - Contient toutes les colonnes originales + les résultats
+   - La couche d'origine reste intacte
