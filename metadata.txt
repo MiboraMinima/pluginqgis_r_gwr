@@ -1,0 +1,10 @@
+[general]
+name=GWR Analysis (R)
+qgisMinimumVersion=3.0
+description=Régression Géographiquement Pondérée utilisant R et GWmodel
+version=0.2
+author=Grégoire Le Campion
+email=gregoire.lecampion@cnrs.fr
+
+[requirements]
+external_deps=R, rgeoda, GWmodel sp, sf
