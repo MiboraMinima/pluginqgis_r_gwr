@@ -309,13 +309,14 @@ cat("\\n=== ANALYSE TERMINEE AVEC SUCCES ===\\n")
             f.write(script_content)
 
     @staticmethod
-    def run_analysis(layer, dependent_var, independent_vars, kernel_type,
+    def run_analysis(r_path, layer, dependent_var, independent_vars, kernel_type,
                     bandwidth_type, bandwidth_value, adaptive, neighbors,
                     standardize, robust):
         """
         Exécute l'analyse GWR avec R
         
         Args:
+            r_path: Chemin vers Rscript
             layer: Couche QGIS à analyser
             dependent_var: Nom de la variable dépendante
             independent_vars: Liste des variables indépendantes
@@ -392,7 +393,7 @@ cat("\\n=== ANALYSE TERMINEE AVEC SUCCES ===\\n")
 
             # Exécuter le script R
             result = subprocess.run(
-                ['Rscript', script_path],
+                [r_path, script_path],
                 capture_output=True,
                 text=True,
                 timeout=1800  # 30 minutes

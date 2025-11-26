@@ -1008,6 +1008,7 @@ class GWRPlugin:
             neighbors = dialog.get_neighbors()
             standardize = dialog.get_standardize()
             robust = dialog.get_robust()
+            r_path = dialog.r_path
             
             if not layer or not dependent_var or not independent_vars:
                 QMessageBox.warning(None, "Erreur",
@@ -1024,7 +1025,7 @@ class GWRPlugin:
 
             # Appel du module GWR séparé
             result_layer, message = GWRAnalysisModule.run_analysis(
-                layer, dependent_var, independent_vars, kernel_type,
+                r_path, layer, dependent_var, independent_vars, kernel_type,
                 bandwidth_type, bandwidth_value, adaptive, neighbors, standardize, robust
             )
 
@@ -1049,6 +1050,7 @@ class GWRPlugin:
             criterion = dialog.get_criterion()
             max_iter = dialog.get_max_iter()
             tolerance = dialog.get_tolerance()
+            r_path = dialog.r_path
             
             if not layer or not dependent_var or not independent_vars:
                 QMessageBox.warning(None, "Erreur",
@@ -1065,7 +1067,7 @@ class GWRPlugin:
 
             # Appel du module MGWR séparé
             result_layer, message = MGWRAnalysisModule.run_analysis(
-                layer, dependent_var, independent_vars, kernel_type,
+                r_path, layer, dependent_var, independent_vars, kernel_type,
                 adaptive, standardize, criterion, max_iter, tolerance
             )
 
@@ -1090,6 +1092,7 @@ class GWRPlugin:
             standardize_weights = dialog.get_standardize_weights()
             significance = dialog.get_significance()
             standardize_var = dialog.get_standardize_variable()
+            r_path = dialog.r_path
             
             if not layer or not variable:
                 QMessageBox.warning(None, "Erreur",
@@ -1112,7 +1115,7 @@ class GWRPlugin:
             try:
                 # Appel du module LISA séparé - SANS permutations
                 result_layer, message = LISAAnalysisModule.run_analysis(
-                    layer, analysis_type, variable, variable2,
+                    r_path, layer, analysis_type, variable, variable2,
                     contiguity_type, order, standardize_weights,
                     significance, standardize_var
                 )

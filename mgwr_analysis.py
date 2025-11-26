@@ -366,12 +366,13 @@ tryCatch({{
             f.write(script_content)
 
     @staticmethod
-    def run_analysis(layer, dependent_var, independent_vars, kernel_type,
+    def run_analysis(r_path, layer, dependent_var, independent_vars, kernel_type,
                     adaptive, standardize, criterion, max_iter, tolerance):
         """
         Exécute l'analyse MGWR avec R - GWmodel::gwr.multiscale
         
         Args:
+            r_path: Chemin vers Rscript
             layer: Couche QGIS à analyser
             dependent_var: Nom de la variable dépendante
             independent_vars: Liste des variables indépendantes
@@ -439,7 +440,7 @@ tryCatch({{
 
             # Exécuter le script R
             result = subprocess.run(
-                ['Rscript', script_path],
+                [r_path, script_path],
                 capture_output=True,
                 text=True,
                 timeout=3600  # 60 minutes pour MGWR

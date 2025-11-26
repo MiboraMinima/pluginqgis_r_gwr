@@ -347,12 +347,13 @@ cat("\\n=== ANALYSE LISA TERMINEE AVEC SUCCES ===\\n")
             f.write(script_content)
     
     @staticmethod
-    def run_analysis(layer, analysis_type, variable, variable2, contiguity_type, 
+    def run_analysis(r_path, layer, analysis_type, variable, variable2, contiguity_type, 
                     order, standardize_weights, significance, standardize_var):
         """
         Exécute l'analyse LISA avec R
         
         Args:
+            r_path: Chemin vers Rscript
             layer: Couche QGIS à analyser
             analysis_type: "univariate" ou "bivariate"
             variable: Nom de la variable d'analyse
@@ -414,7 +415,7 @@ cat("\\n=== ANALYSE LISA TERMINEE AVEC SUCCES ===\\n")
 
             # Exécuter le script R
             result = subprocess.run(
-                ['Rscript', script_path],
+                [r_path, script_path],
                 capture_output=True,
                 text=True,
                 timeout=600  # 10 minutes pour LISA
