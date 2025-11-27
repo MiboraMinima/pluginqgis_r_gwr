@@ -1073,7 +1073,7 @@ class GWRPlugin:
             progress.close()
 
             if result_layer:
-                self.process_results(result_layer, layer, message, "MGWR")
+                self.process_results(result_layer, layer, message, "MGWR", temp_folder)
             else:
                 QMessageBox.critical(None, "Erreur MGWR", message)
     
@@ -1122,7 +1122,7 @@ class GWRPlugin:
                 progress.close()
 
                 if result_layer:
-                    self.process_results(result_layer, layer, message, "LISA")
+                    self.process_results(result_layer, layer, message, "LISA", temp_folder)
                 else:
                     QMessageBox.critical(None, "Erreur LISA", message)
             
