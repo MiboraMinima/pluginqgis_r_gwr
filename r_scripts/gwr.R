@@ -19,17 +19,17 @@ suppressPackageStartupMessages({
 # Read Args --------------------------------------------------------------------
 args <- commandArgs(trailingOnly = TRUE)
 
-INPUT_PATH = args[1]
-OUTPUT_PATH = args[2]
-DEPENDENT_VAR = args[3]
-INDEPENDENT_VARS = unlist(strsplit(args[4], split = ",", fixed = TRUE))
-KERNEL = args[5]
-APPROACH = args[6]
-ADAPTATIVE = as.logical(as.integer(args[7]))
-BANDWIDTH = as.numeric(args[8])
-NEIGHBORS = as.integer(args[9])
-STANDARDIZE = as.logical(as.integer(args[10]))
-ROBUST = as.logical(as.integer(args[11]))
+INPUT_PATH       <- args[1]
+OUTPUT_PATH      <- args[2]
+DEPENDENT_VAR    <- args[3]
+INDEPENDENT_VARS <- unlist(strsplit(args[4], split = ",", fixed = TRUE))
+KERNEL           <- args[5]
+APPROACH         <- args[6]
+ADAPTATIVE       <- as.logical(as.integer(args[7]))
+BANDWIDTH        <- as.numeric(args[8])
+NEIGHBORS        <- as.integer(args[9])
+STANDARDIZE      <- as.logical(as.integer(args[10]))
+ROBUST           <- as.logical(as.integer(args[11]))
 
 cat("=== Résumé des paramètres fournis ===\n")
 cat("Chemin d'entrée (INPUT_PATH)        :", INPUT_PATH, "\n")
@@ -123,13 +123,13 @@ if (APPROACH != "None") {
   # Calcul de la bande passante optimale
   cat("Calcul de la bande passante optimale en cours...\n")
   bw <- bw.gwr(
-    formula = formula,
-    data = sp_data_work,
+    formula  = formula,
+    data     = sp_data_work,
     approach = APPROACH,
-    kernel = KERNEL,
+    kernel   = KERNEL,
     adaptive = ADAPTATIVE,
-    p = 2,
-    longlat = FALSE
+    p        = 2,
+    longlat  = FALSE
   )
   cat(sprintf("Bande passante optimale (%s): %.4f\n", APPROACH, bw))
 } else {
@@ -148,23 +148,23 @@ cat("Calcul en cours (peut prendre plusieurs minutes)...\n")
 start_time <- Sys.time()
 if (ROBUST) {
   gwr_model <- gwr.robust(
-    formula = formula,
-    data = sp_data_work,
-    bw = bw,
-    kernel = KERNEL,
+    formula  = formula,
+    data     = sp_data_work,
+    bw       = bw,
+    kernel   = KERNEL,
     adaptive = ADAPTATIVE,
-    p = 2,
-    longlat = FALSE
+    p        = 2,
+    longlat  = FALSE
   )
 } else {
   gwr_model <- gwr.basic(
-    formula = formula,
-    data = sp_data_work,
-    bw = bw,
-    kernel = KERNEL,
+    formula  = formula,
+    data     = sp_data_work,
+    bw       = bw,
+    kernel   = KERNEL,
     adaptive = ADAPTATIVE,
-    p = 2,
-    longlat = FALSE
+    p        = 2,
+    longlat  = FALSE
   )
 }
 end_time <- Sys.time()
